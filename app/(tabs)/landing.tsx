@@ -1,10 +1,12 @@
 import { useRouter } from "expo-router";
+import { Image } from "expo-image";
 import {
   StyleSheet,
   View,
   ScrollView,
   Pressable,
   Text,
+  Platform,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -21,14 +23,14 @@ export default function LandingScreen() {
 
   const handleMiniGratis = () => {
     router.push({
-      pathname: "/(tabs)/form",
+      pathname: "/form",
       params: { plan: "mini" },
     });
   };
 
   const handleProPlan = () => {
     router.push({
-      pathname: "/(tabs)/form",
+      pathname: "/form",
       params: { plan: "pro" },
     });
   };
@@ -95,9 +97,9 @@ export default function LandingScreen() {
 
             <View style={styles.badgeContainer}>
               <Text style={styles.stars}>⭐⭐⭐⭐⭐</Text>
-              <Text style={[styles.badgeText, { color: colors.text }]}>
-                NPS 9/10 (promedio clientes)
-              </Text>
+          <Text style={[styles.badgeText, { color: colors.text }]}>
+            NPS 9/10 (promedio clientes)
+          </Text>
             </View>
           </View>
         </View>

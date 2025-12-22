@@ -5,7 +5,14 @@
 
 import { Platform } from "react-native";
 
-const tintColorLight = "#0a7ea4";
+// Brand colors for Diagnosis App
+const primaryPurple = "#3a2459"; // Primary brand purple
+const secondaryPink = "#751f82"; // Secondary brand pink
+const accentGold = "#D4AF37"; // CTA gold
+const grayButton = "#6B7280"; // Mini Gratis button
+const lightGray = "#9CA3AF"; // Disabled states
+
+const tintColorLight = secondaryPink;
 const tintColorDark = "#fff";
 
 export const Colors = {
@@ -16,6 +23,13 @@ export const Colors = {
     icon: "#687076",
     tabIconDefault: "#687076",
     tabIconSelected: tintColorLight,
+    primary: primaryPurple,
+    secondary: secondaryPink,
+    accent: accentGold,
+    gray: grayButton,
+    error: "#EF4444",
+    success: "#10B981",
+    surface: "#F3F4F6",
   },
   dark: {
     text: "#ECEDEE",
@@ -24,7 +38,23 @@ export const Colors = {
     icon: "#9BA1A6",
     tabIconDefault: "#9BA1A6",
     tabIconSelected: tintColorDark,
+    primary: primaryPurple,
+    secondary: secondaryPink,
+    accent: accentGold,
+    gray: grayButton,
+    error: "#EF4444",
+    success: "#10B981",
+    surface: "#2D3748",
   },
+};
+
+// Brand color constants for easy reference
+export const BrandColors = {
+  purple: primaryPurple,
+  pink: secondaryPink,
+  gold: accentGold,
+  gray: grayButton,
+  lightGray: lightGray,
 };
 
 export const Fonts = Platform.select({
