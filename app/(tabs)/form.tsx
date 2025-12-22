@@ -75,15 +75,27 @@ export default function FormScreen() {
 
     setIsSubmitting(true);
 
-    // Simulate API call to webhook
-    setTimeout(() => {
+    try {
+      // Si plan = pro → Payment primero
+      if (plan === 'pro') {
+        router.push({
+          pathname: '/(tabs)/payment',
+          params: { formData: JSON.stringify(formData) }
+        });
+      } else {
+        // Plan mini → Directo a processing
+        router.push({
+          pathname: '/(tabs)/processing',
+          params: {
+            plan: 'mini',
+            formData: JSON.stringify(formData)
+          }
+        });
+      }
+    } finally {
       setIsSubmitting(false);
-      router.push({
-        pathname: "/(tabs)/processing",
-        params: { plan },
-      });
-    }, 500);
-  };
+    }
+  }
 
   const rolesOptions = [
     "CEO / Founder",

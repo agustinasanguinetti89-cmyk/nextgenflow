@@ -4,7 +4,7 @@ import type { ExpoConfig } from "expo/config";
 
 // Bundle ID format: space.manus.<project_name_dots>.<timestamp>
 // e.g., "my-app" created at 2024-01-15 10:30:45 -> "space.manus.my.app.t20240115103045"
-const bundleId = "space.manus.diagnosis.app.t20251222134532";
+const bundleId = "space.manus.nextgenpmia.diagnosis";
 // Extract timestamp from bundle ID and prefix with "manus" for deep link scheme
 // e.g., "space.manus.my.app.t20240115103045" -> "manus20240115103045"
 const timestamp = bundleId.split(".").pop()?.replace(/^t/, "") ?? "";
@@ -12,19 +12,18 @@ const schemeFromBundleId = `manus${timestamp}`;
 
 const env = {
   // App branding - update these values directly (do not use env vars)
-  appName: 'Diagnosis App',
+  appName: 'NextgenPMIA Diagnosis',
   appSlug: 'diagnosis-app',
-  // S3 URL of the app logo - set this to the URL returned by generate_image when creating custom logo
-  // Leave empty to use the default icon from assets/images/icon.png
+  // S3 URL of the app logo
   logoUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663245835719/DnbVwgVUchtdnDjd.png',
   scheme: schemeFromBundleId,
-  iosBundleId: bundleId,
-  androidPackage: bundleId,
+  iosBundleId: 'space.manus.nextgenpmia.diagnosis',
+  androidPackage: 'space.manus.nextgenpmia.diagnosis',
 };
 
 const config: ExpoConfig = {
-  name: env.appName,
-  slug: env.appSlug,
+  name: 'NextgenPMIA Diagnosis',
+  slug: 'diagnosis-app',
   version: "1.0.0",
   orientation: "portrait",
   icon: "./assets/images/icon.png",

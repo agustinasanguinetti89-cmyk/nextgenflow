@@ -110,6 +110,19 @@
 - [ ] Provide app preview link to user
 - [ ] Prepare for publishing/deployment
 
+## Phase 13.5: Correcciones Críticas MANUS.IA v2.3
+- [x] Actualizar theme.ts con paleta oficial (Montserrat + Inter)
+- [x] Crear pantalla DQS Gate con 4 campos de validación
+- [x] Implementar función calculateDQS() con 5 dimensiones ponderadas
+- [x] Actualizar app.config.ts con nombre "NextgenPMIA Diagnosis"
+- [x] Crear pantalla Payment (Stripe simulado)
+- [x] Actualizar navegación en form.tsx (Pro → Payment → DQS Gate)
+- [x] Configurar webhooks en config/webhooks.ts
+- [x] Mapear campos a Notion (1-38)
+- [x] Crear archivos de fuentes (Montserrat, Inter) en assets/fonts/
+- [x] Implementar lógica de bloqueo si DQS < 70
+- [x] Configurar URLs del ecosistema (Portal, App, DQS Gate)
+
 
 ## Phase 14: Integración de URLs y Arquitectura de Dos Mundos
 - [ ] Configurar dominio https://nextgenpm.es/diagnostico-profesional/

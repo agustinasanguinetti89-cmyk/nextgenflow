@@ -1,83 +1,119 @@
 /**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
+ * MANUS.IA v2.3 FINAL - Brand Compliance Theme
+ * Paleta de colores oficial NextgenPMIA Diagnosis
+ * Tipografía: Montserrat (titulares) + Inter (cuerpo)
  */
 
-import { Platform } from "react-native";
+export const THEME = {
+  colors: {
+    primary: '#3a2459',        // Morado oscuro (botones, headers)
+    secondary: '#751f82',      // Rosa neón (highlights, CTAs)
+    tertiary: '#685c75',       // Morado apagado (textos secundarios)
+    lavender: '#f6f3f7',       // Lavanda claro (backgrounds)
+    white: '#ffffff',
+    darkGray: '#2a2a2a',       // Textos oscuros
+    mediumGray: '#8a8a8a',     // Textos secundarios
+    gold: '#D4AF37',           // CTA premium Pro
+    success: '#10B981',        // Validación exitosa
+    warning: '#F59E0B',        // Advertencias
+    error: '#EF4444'           // Errores
+  },
+  typography: {
+    title: {
+      fontFamily: 'Montserrat-Bold',    // Titulares
+      fontSize: 28,
+      fontWeight: '700',
+      lineHeight: 36
+    },
+    subtitle: {
+      fontFamily: 'Montserrat-SemiBold',
+      fontSize: 20,
+      fontWeight: '600',
+      lineHeight: 28
+    },
+    body: {
+      fontFamily: 'Inter-Regular',      // Cuerpo
+      fontSize: 16,
+      fontWeight: '400',
+      lineHeight: 24
+    },
+    bodyBold: {
+      fontFamily: 'Inter-SemiBold',
+      fontSize: 16,
+      fontWeight: '600',
+      lineHeight: 24
+    },
+    caption: {
+      fontFamily: 'Inter-Regular',
+      fontSize: 12,
+      fontWeight: '400',
+      lineHeight: 18
+    }
+  },
+  spacing: {
+    xs: 8,
+    sm: 12,
+    md: 16,
+    lg: 24,      // Padding generoso (brand)
+    xl: 32,      // Section gaps
+    xxl: 40
+  },
+  borderRadius: {
+    sm: 8,
+    md: 10,
+    lg: 12,
+    xl: 16       // Bordes redondeados 2xl (brand)
+  },
+  shadows: {
+    soft: {
+      shadowColor: '#3a2459',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.1,
+      shadowRadius: 8,
+      elevation: 3
+    }
+  }
+};
 
-// Brand colors for Diagnosis App
-const primaryPurple = "#3a2459"; // Primary brand purple
-const secondaryPink = "#751f82"; // Secondary brand pink
-const accentGold = "#D4AF37"; // CTA gold
-const grayButton = "#6B7280"; // Mini Gratis button
-const lightGray = "#9CA3AF"; // Disabled states
-
-const tintColorLight = secondaryPink;
-const tintColorDark = "#fff";
-
+// Exportar colores en formato antiguo para compatibilidad
 export const Colors = {
   light: {
-    text: "#11181C",
-    background: "#fff",
-    tint: tintColorLight,
-    icon: "#687076",
-    tabIconDefault: "#687076",
-    tabIconSelected: tintColorLight,
-    primary: primaryPurple,
-    secondary: secondaryPink,
-    accent: accentGold,
-    gray: grayButton,
-    error: "#EF4444",
-    success: "#10B981",
-    surface: "#F3F4F6",
+    text: THEME.colors.darkGray,
+    background: THEME.colors.white,
+    tint: THEME.colors.primary,
+    icon: THEME.colors.mediumGray,
+    tabIconDefault: THEME.colors.mediumGray,
+    tabIconSelected: THEME.colors.primary,
+    surface: THEME.colors.lavender,
+    error: THEME.colors.error,
   },
   dark: {
-    text: "#ECEDEE",
-    background: "#151718",
-    tint: tintColorDark,
-    icon: "#9BA1A6",
-    tabIconDefault: "#9BA1A6",
-    tabIconSelected: tintColorDark,
-    primary: primaryPurple,
-    secondary: secondaryPink,
-    accent: accentGold,
-    gray: grayButton,
-    error: "#EF4444",
-    success: "#10B981",
-    surface: "#2D3748",
+    text: THEME.colors.white,
+    background: '#1a1a1a',
+    tint: THEME.colors.gold,
+    icon: THEME.colors.mediumGray,
+    tabIconDefault: THEME.colors.mediumGray,
+    tabIconSelected: THEME.colors.gold,
+    surface: '#2a2a2a',
+    error: THEME.colors.error,
   },
-};
+}
 
-// Brand color constants for easy reference
 export const BrandColors = {
-  purple: primaryPurple,
-  pink: secondaryPink,
-  gold: accentGold,
-  gray: grayButton,
-  lightGray: lightGray,
+  purple: THEME.colors.primary,
+  pink: THEME.colors.secondary,
+  gold: THEME.colors.gold,
+  gray: '#6B7280',
+  lavender: THEME.colors.lavender,
+  success: THEME.colors.success,
+  warning: THEME.colors.warning,
+  error: THEME.colors.error,
 };
 
-export const Fonts = Platform.select({
-  ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
-    sans: "system-ui",
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
-    serif: "ui-serif",
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
-    rounded: "ui-rounded",
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
-    mono: "ui-monospace",
-  },
-  default: {
-    sans: "normal",
-    serif: "serif",
-    rounded: "normal",
-    mono: "monospace",
-  },
-  web: {
-    sans: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-    serif: "Georgia, 'Times New Roman', serif",
-    rounded: "'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif",
-    mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
-  },
-});
+export const Fonts = {
+  title: THEME.typography.title.fontFamily,
+  subtitle: THEME.typography.subtitle.fontFamily,
+  body: THEME.typography.body.fontFamily,
+  bodyBold: THEME.typography.bodyBold.fontFamily,
+  caption: THEME.typography.caption.fontFamily,
+};

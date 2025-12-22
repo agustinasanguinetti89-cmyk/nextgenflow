@@ -1,33 +1,34 @@
 /**
  * Configuración de Webhooks y Endpoints
+ * MANUS.IA v2.3 FINAL - Brand Compliance
  * 
  * Arquitectura de Dos Mundos:
  * - Portal de Marca: https://nextgenpm.es/
  * - Motor de Conversión (App): https://nextgenpm.es/diagnostico-profesional/
- * - Prep Info Gate: https://nextgenpm.es/diagnostico-profesional/prep-info
+ * - DQS Gate: https://nextgenpm.es/diagnostico-profesional/dqs-gate
  */
 
 // URLs del Ecosistema
 export const ECOSYSTEM_URLS = {
   brandPortal: "https://nextgenpm.es",
   diagnosisApp: "https://nextgenpm.es/diagnostico-profesional",
-  prepInfoGate: "https://nextgenpm.es/diagnostico-profesional/prep-info",
+  dqsGate: "https://nextgenpm.es/diagnostico-profesional/dqs-gate",
   supportEmail: "soporte@nextgenpm.ia",
 };
 
 // Webhooks de n8n
 export const N8N_WEBHOOKS = {
   // Webhook principal para recibir datos del formulario
-  formSubmission: process.env.EXPO_PUBLIC_N8N_WEBHOOK_FORM || "https://n8n.nextgenpm.ia/webhook/diagnosis-form",
+  formSubmission: process.env.EXPO_PUBLIC_N8N_WEBHOOK_FORM || "https://n8n.nextgenpm.es/webhook/diagnosis-ready",
   
-  // Webhook para validación de datos (DQS)
-  dqsValidation: process.env.EXPO_PUBLIC_N8N_WEBHOOK_DQS || "https://n8n.nextgenpm.ia/webhook/dqs-validation",
+  // Webhook para validación de datos (DQS < 70)
+  dqsLow: process.env.EXPO_PUBLIC_N8N_WEBHOOK_DQS_LOW || "https://n8n.nextgenpm.es/webhook/dqs-low",
   
-  // Webhook para procesamiento de IA
-  aiProcessing: process.env.EXPO_PUBLIC_N8N_WEBHOOK_AI || "https://n8n.nextgenpm.ia/webhook/ai-processing",
+  // Webhook para procesamiento de IA (DQS >= 70)
+  aiProcessing: process.env.EXPO_PUBLIC_N8N_WEBHOOK_AI || "https://n8n.nextgenpm.es/webhook/ai-processing",
   
   // Webhook para confirmación de pago (Stripe)
-  stripeConfirmation: process.env.EXPO_PUBLIC_N8N_WEBHOOK_STRIPE || "https://n8n.nextgenpm.ia/webhook/stripe-confirmation",
+  stripeConfirmation: process.env.EXPO_PUBLIC_N8N_WEBHOOK_STRIPE || "https://n8n.nextgenpm.es/webhook/stripe",
 };
 
 // Integraciones Externas
@@ -64,13 +65,13 @@ export const EXTERNAL_APIS = {
 
 // Configuración de DQS (Data Quality Score)
 export const DQS_CONFIG = {
-  threshold: 70, // Mínimo requerido para procesar
+  threshold: 70, // Mínimo requerido para procesar automáticamente
   weights: {
     accuracy: 0.30,
     completeness: 0.25,
     consistency: 0.20,
     timeliness: 0.15,
-    validity: 0.10,
+    context: 0.10,
   },
 };
 
@@ -97,24 +98,23 @@ export const NOTION_FIELD_MAPPING = {
   presupuesto: "field_4",
   problema: "field_5",
   
-  // Campos de Prep Info (6-10)
-  sector: "field_6",
-  teamSize: "field_7",
-  currentTools: "field_8",
-  urgency: "field_9",
-  additionalNotes: "field_10",
+  // Campos de DQS Gate (6-10)
+  systems: "field_6",
+  integrations: "field_7",
+  constraints: "field_8",
+  isCurrentData: "field_9",
+  dqsScore: "field_10",
   
   // Campos de Resultado (11-38)
   roiEstimado: "field_11",
   procesosIdentificados: "field_12",
   tiempoAhorrado: "field_13",
   scoreConfianza: "field_14",
-  dqsScore: "field_15",
-  modeloUtilizado: "field_16",
-  fechaProcesamiento: "field_17",
-  emailEnviado: "field_18",
-  pdfUrl: "field_19",
-  // ... campos 20-38 para datos adicionales
+  modeloUtilizado: "field_15",
+  fechaProcesamiento: "field_16",
+  emailEnviado: "field_17",
+  pdfUrl: "field_18",
+  // ... campos 19-38 para datos adicionales
 };
 
 // Plantillas de Email
@@ -167,23 +167,53 @@ export async function sendToWebhook(
 }
 
 /**
- * Función para calcular DQS
+ * Calcula Data Quality Score (DQS) - Rango 0-100
+ * Threshold: ≥70 para procesar diagnóstico automático
+ * <70: Requiere call 15min validación
+ * 
+ * Dimensiones:
+ * - Accuracy (30%): Datos básicos + sistemas
+ * - Completeness (25%): Porcentaje de campos llenos
+ * - Consistency (20%): Validación lógica
+ * - Timeliness (15%): Datos actuales
+ * - Context (10%): Información contextual
  */
 export function calculateDQS(data: Record<string, any>): number {
-  // Implementar lógica de cálculo según Doc 09
-  const accuracy = data.empresa && data.rol ? 1 : 0;
-  const completeness = Object.values(data).filter((v) => v).length / Object.keys(data).length;
-  const consistency = 1; // Validar consistencia de datos
-  const timeliness = 1; // Datos recientes
-  const validity = data.horas >= 1 && data.horas <= 40 ? 1 : 0;
+  // Dimensión 1: Accuracy (30%) - Datos básicos + sistemas
+  const hasBasicData = !!(data.empresa && data.rol && data.horas);
+  const hasSystemsData = Array.isArray(data.systems) && data.systems.length > 0;
+  const accuracy = (hasBasicData && hasSystemsData) ? 1 : (hasBasicData ? 0.7 : 0.3);
 
+  // Dimensión 2: Completeness (25%) - % campos llenos
+  const totalFields = Object.keys(data).length || 1;
+  const filledFields = Object.values(data).filter(v => {
+    if (Array.isArray(v)) return v.length > 0;
+    if (typeof v === 'string') return v.trim() !== '';
+    return v !== null && v !== undefined && v !== false;
+  }).length;
+  const completeness = Math.min(filledFields / totalFields, 1);
+
+  // Dimensión 3: Consistency (20%) - Validación lógica
+  const horasValid = typeof data.horas === 'number' && data.horas >= 1 && data.horas <= 40;
+  const presupuestoValid = data.presupuesto && data.presupuesto !== '';
+  const consistency = (horasValid && presupuestoValid) ? 1 : 0.7;
+
+  // Dimensión 4: Timeliness (15%) - Datos actuales
+  const timeliness = data.isCurrentData ? 1 : 0.3;
+
+  // Dimensión 5: Context (10%) - Información contextual
+  const hasConstraints = typeof data.constraints === 'string' && data.constraints.length > 20;
+  const hasIntegrations = data.integrations && data.integrations !== '';
+  const context = (hasConstraints && hasIntegrations) ? 1 : (hasIntegrations ? 0.7 : 0.4);
+
+  // Fórmula ponderada DQS
   const weights = DQS_CONFIG.weights;
-  const dqs =
-    accuracy * weights.accuracy +
-    completeness * weights.completeness +
-    consistency * weights.consistency +
-    timeliness * weights.timeliness +
-    validity * weights.validity;
+  const dqs = 
+    (accuracy * weights.accuracy) + 
+    (completeness * weights.completeness) + 
+    (consistency * weights.consistency) + 
+    (timeliness * weights.timeliness) + 
+    (context * weights.context);
 
   return Math.round(dqs * 100);
 }
