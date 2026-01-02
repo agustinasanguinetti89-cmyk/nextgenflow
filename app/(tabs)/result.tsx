@@ -1,320 +1,135 @@
-import { useLocalSearchParams, useRouter } from "expo-router";
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Pressable,
-  Text,
-  Alert,
-} from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
-import { Colors, BrandColors } from "@/constants/theme";
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import React from 'react';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Linking, Alert } from 'react-native';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { THEME } from '@/constants/theme';
 
 export default function ResultScreen() {
+  const params = useLocalSearchParams();
   const router = useRouter();
-  const { plan } = useLocalSearchParams<{ plan: string }>();
-  const colorScheme = useColorScheme();
-  const insets = useSafeAreaInsets();
-  const colors = Colors[colorScheme ?? "light"];
+  const paymentInfo = params.payment_info ? JSON.parse(params.payment_info as string) : null;
 
-  const isPro = plan === "pro";
-
-  const handleDownloadPDF = () => {
-    Alert.alert(
-      "Descargar PDF",
-      "Tu diagnóstico se está descargando...",
-      [{ text: "OK" }]
-    );
-  };
-
-  const handleEmailPDF = () => {
-    Alert.alert(
-      "Enviar por Email",
-      "Se ha enviado tu diagnóstico a tu correo electrónico.",
-      [{ text: "OK" }]
-    );
-  };
-
-  const handleBookCall = () => {
-    Alert.alert(
-      "Agendar Consultoría",
-      "Redirigiendo a Calendly...",
-      [{ text: "OK" }]
-    );
-  };
-
-  const handleBackHome = () => {
-    router.push("/");
+  const handleDownload = () => {
+    if (params.pdfUrl) {
+      Linking.openURL(params.pdfUrl as string);
+    } else {
+      Alert.alert('Info', 'El PDF se está generando y se enviará a tu email.');
+    }
   };
 
   return (
-    <ThemedView style={styles.container}>
-      <ScrollView
-        contentContainerStyle={[
-          styles.scrollContent,
-          {
-            paddingTop: Math.max(insets.top, 16),
-            paddingBottom: Math.max(insets.bottom, 16),
-          },
-        ]}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Header */}
-        <View style={styles.header}>
-          <ThemedText type="title" style={styles.title}>
-            Tu Diagnóstico está listo
-          </ThemedText>
-        </View>
-
-        {/* Summary Card */}
-        <View
-          style={[
-            styles.summaryCard,
-            { backgroundColor: colors.surface },
-          ]}
-        >
-          <View style={styles.summaryRow}>
-            <View style={styles.summaryItem}>
-              <ThemedText type="default" style={styles.summaryLabel}>
-                ROI Estimado
-              </ThemedText>
-              <ThemedText
-                type="defaultSemiBold"
-                style={[styles.summaryValue, { color: BrandColors.purple }]}
-              >
-                750€/mes
-              </ThemedText>
-            </View>
-
-            <View style={styles.summaryDivider} />
-
-            <View style={styles.summaryItem}>
-              <ThemedText type="default" style={styles.summaryLabel}>
-                Procesos
-              </ThemedText>
-              <ThemedText
-                type="defaultSemiBold"
-                style={[styles.summaryValue, { color: BrandColors.purple }]}
-              >
-                {isPro ? "5" : "1"}
-              </ThemedText>
-            </View>
+    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <Text style={styles.title}>¡Resultado Listo!</Text>
+      
+      <View style={styles.card}>
+        <Text style={styles.scoreLabel}>DQS Score</Text>
+        <Text style={styles.scoreValue}>{params.dqs_score || '85'}/100</Text>
+        
+        {params.type === 'mini' && (
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Impacto estimado:</Text>
+            <Text style={styles.infoValue}>€{params.miniimpactroi || '1.200'}/año</Text>
           </View>
+        )}
 
-          <View style={styles.summaryDivider} />
+        {params.type === 'pro' && (
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Precisión Prometida:</Text>
+            <Text style={styles.infoValue}>{params.accuracy_promised || '92'}%</Text>
+          </View>
+        )}
+      </View>
 
-          <View style={styles.summaryRow}>
-            <View style={styles.summaryItem}>
-              <ThemedText type="default" style={styles.summaryLabel}>
-                Tiempo Ahorrado
-              </ThemedText>
-              <ThemedText
-                type="defaultSemiBold"
-                style={[styles.summaryValue, { color: BrandColors.purple }]}
-              >
-                10h/semana
-              </ThemedText>
-            </View>
-
-            <View style={styles.summaryDivider} />
-
-            <View style={styles.summaryItem}>
-              <ThemedText type="default" style={styles.summaryLabel}>
-                Confianza
-              </ThemedText>
-              <ThemedText
-                type="defaultSemiBold"
-                style={[styles.summaryValue, { color: BrandColors.purple }]}
-              >
-                95%
-              </ThemedText>
-            </View>
+      {paymentInfo && (
+        <View style={styles.paymentCard}>
+          <Text style={styles.paymentTitle}>Pendiente de Pago</Text>
+          <Text style={styles.paymentText}>Por favor, realiza la transferencia para confirmar:</Text>
+          <View style={styles.bankDetails}>
+            <Text style={styles.bankLabel}>IBAN:</Text>
+            <Text style={styles.bankValue}>{paymentInfo.iban}</Text>
+            <Text style={styles.bankLabel}>Concepto:</Text>
+            <Text style={styles.bankValue}>NEXTGENFLOW-{params.type?.toString().toUpperCase()}</Text>
+            <Text style={styles.bankLabel}>Importe:</Text>
+            <Text style={styles.bankValue}>€{params.comboprice || params.formacionPrice}</Text>
           </View>
         </View>
+      )}
 
-        {/* Actions */}
-        <View style={styles.actionsContainer}>
-          {/* Download PDF Button */}
-          <Pressable
-            onPress={handleDownloadPDF}
-            style={({ pressed }) => [
-              styles.actionButton,
-              {
-                backgroundColor: BrandColors.purple,
-                opacity: pressed ? 0.8 : 1,
-              },
-            ]}
+      <View style={styles.actions}>
+        <TouchableOpacity style={styles.primaryButton} onPress={handleDownload}>
+          <Text style={styles.buttonText}>DESCARGAR PDF</Text>
+        </TouchableOpacity>
+
+        {params.type === 'mini' && (
+          <TouchableOpacity 
+            style={styles.secondaryButton} 
+            onPress={() => router.push('/pro')}
           >
-            <ThemedText
-              type="defaultSemiBold"
-              style={[styles.actionButtonText, { color: "#fff" }]}
-            >
-              📥 Descargar PDF
-            </ThemedText>
-          </Pressable>
+            <Text style={styles.buttonText}>UPGRADE A PRO (€297)</Text>
+          </TouchableOpacity>
+        )}
 
-          {/* Email Button */}
-          <Pressable
-            onPress={handleEmailPDF}
-            style={({ pressed }) => [
-              styles.actionButton,
-              {
-                backgroundColor: BrandColors.pink,
-                opacity: pressed ? 0.8 : 1,
-              },
-            ]}
-          >
-            <ThemedText
-              type="defaultSemiBold"
-              style={[styles.actionButtonText, { color: "#fff" }]}
-            >
-              📧 Enviar por Email
-            </ThemedText>
-          </Pressable>
-
-          {/* Book Call Button (Pro only) */}
-          {isPro && (
-            <Pressable
-              onPress={handleBookCall}
-              style={({ pressed }) => [
-                styles.actionButton,
-                {
-                  backgroundColor: BrandColors.gold,
-                  opacity: pressed ? 0.8 : 1,
-                },
-              ]}
-            >
-              <ThemedText
-                type="defaultSemiBold"
-                style={[styles.actionButtonText, { color: "#1a1a1a" }]}
-              >
-                📞 Agendar Consultoría
-              </ThemedText>
-            </Pressable>
-          )}
-        </View>
-
-        {/* Support Section */}
-        <View style={styles.supportSection}>
-          <ThemedText type="default" style={[styles.supportText, { color: colors.text }]}>
-            ¿Preguntas o necesitas ayuda?
-          </ThemedText>
-          <Pressable>
-            <ThemedText
-              type="link"
-              style={[styles.supportLink, { color: BrandColors.purple }]}
-            >
-              Contacta con soporte@nextgenpm.ia
-            </ThemedText>
-          </Pressable>
-        </View>
-
-        {/* Back Home Button */}
-        <Pressable
-          onPress={handleBackHome}
-          style={({ pressed }) => [
-            styles.backButton,
-            { opacity: pressed ? 0.7 : 1 },
-          ]}
+        <TouchableOpacity 
+          style={styles.outlineButton} 
+          onPress={() => router.push('/')}
         >
-          <ThemedText
-            type="link"
-            style={[styles.backButtonText, { color: BrandColors.purple }]}
-          >
-            ← Volver al inicio
-          </ThemedText>
-        </Pressable>
-      </ScrollView>
-    </ThemedView>
+          <Text style={styles.outlineButtonText}>VOLVER AL INICIO</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  scrollContent: {
-    flexGrow: 1,
-    paddingHorizontal: 16,
-  },
-  header: {
+  container: { flex: 1, backgroundColor: THEME.colors.white },
+  content: { padding: 24, paddingTop: 60 },
+  title: { fontFamily: 'Montserrat-Bold', fontSize: 32, color: THEME.colors.primary, textAlign: 'center', marginBottom: 32 },
+  card: {
+    backgroundColor: THEME.colors.lavender,
+    padding: 24,
+    borderRadius: 16,
+    alignItems: 'center',
     marginBottom: 24,
-    alignItems: "center",
+    borderWidth: 2,
+    borderColor: THEME.colors.primary
   },
-  title: {
-    textAlign: "center",
-  },
-  summaryCard: {
+  scoreLabel: { fontFamily: 'Inter-Regular', fontSize: 16, color: THEME.colors.mediumGray },
+  scoreValue: { fontFamily: 'Montserrat-Bold', fontSize: 48, color: THEME.colors.secondary },
+  infoRow: { flexDirection: 'row', marginTop: 16, gap: 8 },
+  infoLabel: { fontFamily: 'Inter-SemiBold', fontSize: 16, color: THEME.colors.darkGray },
+  infoValue: { fontFamily: 'Inter-Bold', fontSize: 16, color: THEME.colors.primary },
+  paymentCard: {
+    backgroundColor: '#FFFBEB',
+    padding: 20,
     borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#F59E0B',
+    marginBottom: 24
+  },
+  paymentTitle: { fontFamily: 'Montserrat-Bold', fontSize: 18, color: '#92400E', marginBottom: 8 },
+  paymentText: { fontFamily: 'Inter-Regular', fontSize: 14, color: '#92400E', marginBottom: 16 },
+  bankDetails: { gap: 4 },
+  bankLabel: { fontFamily: 'Inter-SemiBold', fontSize: 12, color: '#92400E' },
+  bankValue: { fontFamily: 'Inter-Bold', fontSize: 14, color: THEME.colors.primary, marginBottom: 8 },
+  actions: { gap: 12 },
+  primaryButton: {
+    backgroundColor: THEME.colors.primary,
     padding: 16,
-    marginBottom: 24,
+    borderRadius: 8,
+    alignItems: 'center'
   },
-  summaryRow: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
-    paddingVertical: 12,
+  secondaryButton: {
+    backgroundColor: THEME.colors.secondary,
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center'
   },
-  summaryItem: {
-    flex: 1,
-    alignItems: "center",
+  outlineButton: {
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: THEME.colors.mediumGray
   },
-  summaryLabel: {
-    fontSize: 12,
-    marginBottom: 4,
-  },
-  summaryValue: {
-    fontSize: 18,
-    fontWeight: "700",
-  },
-  summaryDivider: {
-    width: 1,
-    height: 40,
-    backgroundColor: "#D1D5DB",
-  },
-  actionsContainer: {
-    gap: 12,
-    marginBottom: 24,
-  },
-  actionButton: {
-    borderRadius: 10,
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    minHeight: 48,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  actionButtonText: {
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  supportSection: {
-    alignItems: "center",
-    paddingVertical: 16,
-    marginBottom: 16,
-    borderTopWidth: 1,
-    borderTopColor: "#E5E7EB",
-    borderBottomWidth: 1,
-    borderBottomColor: "#E5E7EB",
-  },
-  supportText: {
-    marginBottom: 4,
-    fontSize: 14,
-  },
-  supportLink: {
-    fontSize: 14,
-    fontWeight: "500",
-  },
-  backButton: {
-    paddingVertical: 12,
-    alignItems: "center",
-  },
-  backButtonText: {
-    fontSize: 14,
-    fontWeight: "500",
-  },
+  buttonText: { color: '#fff', fontFamily: 'Montserrat-Bold', fontSize: 16 },
+  outlineButtonText: { color: THEME.colors.mediumGray, fontFamily: 'Montserrat-Bold', fontSize: 16 }
 });
