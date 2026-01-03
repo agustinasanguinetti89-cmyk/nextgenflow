@@ -8,7 +8,7 @@
 
 ## Phase 2: Landing Screen (Pantalla 1)
 - [x] Create landing screen component with hero section
-- [x] Implement header with NextgenPM.IA logo
+- [x] Implement header with NextGenFlow.IA logo
 - [x] Add hero title and subtitle
 - [x] Add highlight text with urgency messaging
 - [x] Add social proof section (testimonial + badge)
@@ -114,7 +114,7 @@
 - [x] Actualizar theme.ts con paleta oficial (Montserrat + Inter)
 - [x] Crear pantalla DQS Gate con 4 campos de validación
 - [x] Implementar función calculateDQS() con 5 dimensiones ponderadas
-- [x] Actualizar app.config.ts con nombre "NextgenPMIA NextGenFlow"
+- [x] Actualizar app.config.ts con nombre "NextGenFlowIA NextGenFlow"
 - [x] Crear pantalla Payment (Stripe simulado)
 - [x] Actualizar navegación en form.tsx (Pro → Payment → DQS Gate)
 - [x] Configurar webhooks en config/webhooks.ts
@@ -125,9 +125,9 @@
 
 
 ## Phase 14: Integración de URLs y Arquitectura de Dos Mundos
-- [ ] Configurar dominio https://nextgenpm.es/diagnostico-profesional/
-- [ ] Configurar subdominio para Prep Info: https://nextgenpm.es/diagnostico-profesional/prep-info
-- [ ] Crear CTA en portal de marca (nextgenpm.es) que redirija a /diagnostico-profesional/
+- [ ] Configurar dominio https://NextGenFlow.es/diagnostico-profesional/
+- [ ] Configurar subdominio para Prep Info: https://NextGenFlow.es/diagnostico-profesional/prep-info
+- [ ] Crear CTA en portal de marca (NextGenFlow.es) que redirija a /diagnostico-profesional/
 - [ ] Implementar redirección post-pago de Stripe a /prep-info
 
 ## Phase 15: Integración de Webhooks y Notion
