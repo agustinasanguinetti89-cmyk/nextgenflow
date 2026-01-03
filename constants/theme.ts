@@ -16,6 +16,22 @@ export const THEME = {
     error: '#EF4444',          // Errores
     gold: '#D4AF37',           // Acento para Pro
   },
+
+  // ✅ NUEVO: Sistema de gradientes (alineado con web NextgenPM.IA)
+  gradients: {
+    // Hero sections y backgrounds grandes
+    hero: ['#3a2459', '#2d1a3e', '#751f82', '#5a1570'],
+    
+    // Secciones de contenido
+    section: ['#f6f3f7', '#faf8fb'],
+    
+    // Textos y títulos destacados
+    text: ['#751f82', '#3a2459'],
+    
+    // Botones primarios
+    button: ['#751f82', '#5a1570'],
+  },
+
   typography: {
     title: {
       fontFamily: 'Montserrat-Bold',
@@ -54,21 +70,74 @@ export const THEME = {
     md: 16,
     lg: 24,
     xl: 32,
-    xxl: 40
+    xxl: 48,      // Corrección: era 40 → ahora 48
+    '3xl': 80,    // NUEVO: para hero sections
+    '4xl': 120    // NUEVO: para landing hero
   },
   borderRadius: {
-    sm: 8,
-    md: 10,
-    lg: 12,
-    xl: 16
+    sm: 6,      // Corrección: era 8 → ahora 6
+    base: 8,    // NUEVO: valor base
+    md: 12,     // Corrección: era 10 → ahora 12
+    lg: 16,     // Corrección: era 12 → ahora 16
+    xl: 16,     // Sin cambios
+    full: 9999  // NUEVO: para pills y círculos
   },
   shadows: {
+    sm: {
+      shadowColor: '#3a2459',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.08,
+      shadowRadius: 4,
+      elevation: 2
+    },
+    md: {
+      shadowColor: '#3a2459',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.12,
+      shadowRadius: 8,
+      elevation: 4
+    },
+    lg: {
+      shadowColor: '#3a2459',
+      shadowOffset: { width: 0, height: 8 },
+      shadowOpacity: 0.16,
+      shadowRadius: 16,
+      elevation: 8
+    },
     soft: {
       shadowColor: '#3a2459',
       shadowOffset: { width: 0, height: 4 },
       shadowOpacity: 0.1,
       shadowRadius: 8,
       elevation: 3
+    },
+    hover: {
+      shadowColor: '#751f82',
+      shadowOffset: { width: 0, height: 6 },
+      shadowOpacity: 0.2,
+      shadowRadius: 12,
+      elevation: 6
+    }
+  },
+  // ✅ NUEVO: Sistema de animaciones
+  animations: {
+    // Duraciones estándar (milisegundos)
+    duration: {
+      fast: 150,      // Micro-interacciones: hover, press
+      normal: 250,    // Transiciones estándar: navegación, cambios UI
+      slow: 400       // Transiciones complejas: modals, slides
+    },
+    
+    // Easing functions
+    easing: {
+      standard: 'ease-in-out',  // Para CSS/equivalentes Web
+      
+      // Para React Native Animated API
+      spring: {
+        damping: 15,
+        stiffness: 150,
+        mass: 1
+      }
     }
   }
 };
