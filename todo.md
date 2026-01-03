@@ -1,4 +1,4 @@
-# Diagnosis App - Project TODO
+# NextGenFlow App - Project TODO
 
 ## Phase 1: Setup & Branding
 - [x] Generate custom app logo (brand identity)
@@ -114,7 +114,7 @@
 - [x] Actualizar theme.ts con paleta oficial (Montserrat + Inter)
 - [x] Crear pantalla DQS Gate con 4 campos de validación
 - [x] Implementar función calculateDQS() con 5 dimensiones ponderadas
-- [x] Actualizar app.config.ts con nombre "NextgenPMIA Diagnosis"
+- [x] Actualizar app.config.ts con nombre "NextgenPMIA NextGenFlow"
 - [x] Crear pantalla Payment (Stripe simulado)
 - [x] Actualizar navegación en form.tsx (Pro → Payment → DQS Gate)
 - [x] Configurar webhooks en config/webhooks.ts
@@ -164,7 +164,7 @@
 
 ## Phase 19: Integración de Calendly
 - [ ] Configurar embed de Calendly en Pantalla 7
-- [ ] Crear enlace de Calendly para Agustina
+- [ ] Crear enlace de Calendly para Equipo NextGenFlow
 - [ ] Implementar fallback de contacto por email
 - [ ] Probar booking de llamadas
 

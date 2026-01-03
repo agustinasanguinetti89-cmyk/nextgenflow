@@ -1,8 +1,8 @@
-# Diagnosis App - Mobile Interface Design
+# NextGenFlow App - Mobile Interface Design
 
 ## Overview
 
-The **Diagnosis App** is a mobile-first application that guides users through a diagnostic workflow to identify business automation opportunities. The app implements a dual-path strategy: a free "Mini Gratis" option and a premium "Pro 297€" option, each with different data collection requirements.
+The **NextGenFlow App** is a mobile-first application that guides users through a diagnostic workflow to identify business automation opportunities. The app implements a dual-path strategy: a free "Mini Gratis" option and a premium "Pro 297€" option, each with different data collection requirements.
 
 **Design Principles:**
 - Mobile portrait orientation (9:16)
@@ -327,7 +327,7 @@ The **Diagnosis App** is a mobile-first application that guides users through a 
 ## Navigation
 
 - **Primary:** Tab-based (if multi-screen app) or stack-based (linear flow)
-- **For Diagnosis App:** Stack-based (linear flow through screens)
+- **For NextGenFlow App:** Stack-based (linear flow through screens)
 - **Gestures:** Swipe back to previous screen (standard iOS)
 
 ---

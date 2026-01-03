@@ -15,7 +15,7 @@ app.use(express.json());
 // TYPES
 // ═══════════════════════════════════════════════════════════════
 
-interface DiagnosisFormData {
+interface NextGenFlowFormData {
   empresa: string;
   rol: string;
   horas: number;
@@ -31,7 +31,7 @@ interface DiagnosisFormData {
   };
 }
 
-interface DiagnosisResponse {
+interface NextGenFlowResponse {
   success: boolean;
   dqsScore: number;
   tier: 'Bronze' | 'Silver' | 'Gold';
@@ -57,7 +57,7 @@ interface DiagnosisResponse {
  * - Timeliness (15%): submitted on time
  * - Validity (10%): constraints met (horas 1-40, etc)
  */
-function calculateDQS(data: DiagnosisFormData): {
+function calculateDQS(data: NextGenFlowFormData): {
   score: number;
   tier: 'Bronze' | 'Silver' | 'Gold';
   accuracy: string;
@@ -70,7 +70,7 @@ function calculateDQS(data: DiagnosisFormData): {
   // Completeness: all 5 required fields
   const requiredFields = ['empresa', 'rol', 'horas', 'presupuesto', 'problema'];
   const filledFields = requiredFields.filter((field) => {
-    const value = data[field as keyof DiagnosisFormData];
+    const value = data[field as keyof NextGenFlowFormData];
     return value !== null && value !== undefined && String(value).trim().length > 0;
   }).length;
   const completenessScore = filledFields / requiredFields.length;
@@ -221,7 +221,7 @@ app.get('/health', (req: Request, res: Response) => {
  */
 app.post('/api/diagnosis', (req: Request, res: Response) => {
   try {
-    const data: DiagnosisFormData = req.body;
+    const data: NextGenFlowFormData = req.body;
 
     // ═══════════════════════════════════════════════════════════
     // VALIDATION
@@ -298,7 +298,7 @@ app.post('/api/diagnosis', (req: Request, res: Response) => {
     const estimatedROI = estimateROI(data.horas);
 
     // Log for debugging
-    console.log(`📊 Diagnosis processed:`);
+    console.log(`📊 NextGenFlow processed:`);
     console.log(`   Empresa: ${data.empresa}`);
     console.log(`   Rol: ${data.rol}`);
     console.log(`   Horas: ${data.horas}`);
@@ -312,7 +312,7 @@ app.post('/api/diagnosis', (req: Request, res: Response) => {
     const processingTimeSeconds = Math.ceil(processingTimeMs / 1000);
 
     // Build response
-    const response: DiagnosisResponse = {
+    const response: NextGenFlowResponse = {
       success: true,
       dqsScore: score,
       tier,
@@ -321,7 +321,7 @@ app.post('/api/diagnosis', (req: Request, res: Response) => {
       processes,
       processingTime: `${processingTimeSeconds} seconds`,
       timestamp: new Date().toISOString(),
-      message: `✅ Diagnosis completed in ${processingTimeSeconds}s`,
+      message: `✅ NextGenFlow completed in ${processingTimeSeconds}s`,
     };
 
     // Simulate network delay (optional)

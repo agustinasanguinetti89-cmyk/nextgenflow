@@ -4,7 +4,7 @@ import { THEME } from '@/constants/theme';
 import { sendToNextGenWebhook } from '@/config/webhooks';
 import { useRouter } from 'expo-router';
 
-export default function ProDiagnosis() {
+export default function ProNextGenFlow() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     clientname: '',

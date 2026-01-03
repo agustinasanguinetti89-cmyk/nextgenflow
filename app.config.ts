@@ -3,30 +3,27 @@ import "./scripts/load-env.js";
 import type { ExpoConfig } from "expo/config";
 
 // Bundle ID format: space.manus.<project_name_dots>.<timestamp>
-// e.g., "my-app" created at 2024-01-15 10:30:45 -> "space.manus.my.app.t20240115103045"
-const bundleId = "space.manus.nextgenpmia.diagnosis";
-// Extract timestamp from bundle ID and prefix with "manus" for deep link scheme
-// e.g., "space.manus.my.app.t20240115103045" -> "manus20240115103045"
+const bundleId = "space.manus.nextgenflow.app";
 const timestamp = bundleId.split(".").pop()?.replace(/^t/, "") ?? "";
 const schemeFromBundleId = `manus${timestamp}`;
 
 const env = {
-  // App branding - update these values directly (do not use env vars)
-  appName: 'NextgenPMIA Diagnosis',
-  appSlug: 'diagnosis-app',
+  // App branding - update these values directly
+  appName: 'NextGenFlow',
+  appSlug: 'nextgenflow-app',
   // S3 URL of the app logo
   logoUrl: 'https://files.manuscdn.com/user_upload_by_module/session_file/310519663245835719/DnbVwgVUchtdnDjd.png',
   scheme: schemeFromBundleId,
-  iosBundleId: 'space.manus.nextgenpmia.diagnosis',
-  androidPackage: 'space.manus.nextgenpmia.diagnosis',
+  iosBundleId: 'space.manus.nextgenflow.app',
+  androidPackage: 'space.manus.nextgenflow.app',
 };
 
 const config: ExpoConfig = {
-  name: 'NextgenPMIA Diagnosis',
-  slug: 'diagnosis-app',
-  version: "1.0.0",
+  name: 'NextGenFlow',
+  slug: 'nextgenflow-app',
+  version: "3.0.0",
   orientation: "portrait",
-  icon: "./assets/images/icon.png",
+  icon: "./assets/images/logo-logo-icon.png",
   scheme: env.scheme,
   userInterfaceStyle: "automatic",
   newArchEnabled: true,
@@ -39,7 +36,7 @@ const config: ExpoConfig = {
   },
   android: {
     adaptiveIcon: {
-      backgroundColor: "#E6F4FE",
+      backgroundColor: "#3a2459",
       foregroundImage: "./assets/images/android-icon-foreground.png",
       backgroundImage: "./assets/images/android-icon-background.png",
       monochromeImage: "./assets/images/android-icon-monochrome.png",
@@ -48,36 +45,20 @@ const config: ExpoConfig = {
     predictiveBackGestureEnabled: false,
     package: env.androidPackage,
     permissions: ["POST_NOTIFICATIONS"],
-    intentFilters: [
-      {
-        action: "VIEW",
-        autoVerify: true,
-        data: [
-          {
-            scheme: env.scheme,
-            host: "*",
-          },
-        ],
-        category: ["BROWSABLE", "DEFAULT"],
-      },
-    ],
   },
   web: {
     output: "static",
-    favicon: "./assets/images/favicon.png",
+    favicon: "./assets/images/favlogo-logo-icon.png",
   },
   plugins: [
     "expo-router",
     [
       "expo-splash-screen",
       {
-        image: "./assets/images/splash-icon.png",
+        image: "./assets/images/splash-logo-logo-icon.png",
         imageWidth: 200,
         resizeMode: "contain",
-        backgroundColor: "#ffffff",
-        dark: {
-          backgroundColor: "#000000",
-        },
+        backgroundColor: "#3a2459",
       },
     ],
   ],

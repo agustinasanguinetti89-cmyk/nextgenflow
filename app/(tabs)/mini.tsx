@@ -4,7 +4,7 @@ import { THEME } from '@/constants/theme';
 import { sendToNextGenWebhook } from '@/config/webhooks';
 import { useRouter } from 'expo-router';
 
-export default function MiniDiagnosis() {
+export default function MiniNextGenFlow() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     clientname: '',
