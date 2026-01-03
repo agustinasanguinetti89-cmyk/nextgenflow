@@ -53,7 +53,7 @@ export default function LandingScreen() {
             type="defaultSemiBold"
             style={[styles.logo, { color: BrandColors.purple }]}
           >
-            NextgenPM.IA
+            NextGenFlow.IA
           </ThemedText>
         </View>
 
@@ -154,7 +154,7 @@ export default function LandingScreen() {
         {/* Footer */}
         <View style={styles.footer}>
           <Text style={[styles.footerText, { color: colors.icon }]}>
-            © 2025 NextgenPM.IA | Automatización IA para PYMEs
+            © 2025 NextGenFlow.IA | Automatización IA para PYMEs
           </Text>
           <View style={styles.footerLinks}>
             <Pressable>
