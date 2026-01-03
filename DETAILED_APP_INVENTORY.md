@@ -1,6 +1,6 @@
 # NextGenFlow App - Inventario Detallado Completo
 
-**Proyecto:** NextGenFlow App NextgenPM.IA  
+**Proyecto:** NextGenFlow App NextGenFlow.IA  
 **Versión:** 3.0 FINAL  
 **Fecha:** 2 Enero 2026
 
@@ -20,7 +20,7 @@ La aplicación está construida sobre Expo/React Native siguiendo la arquitectur
 - **Equipo:** Equipo NextGenFlow.
 
 ## 🔗 Integraciones
-- **Webhooks:** n8n (https://n8n.nextgenpm.es/webhook/nextgenflow)
+- **Webhooks:** n8n (https://n8n.NextGenFlow.es/webhook/nextgenflow)
 - **Pagos:** Stripe (Pro) y Transferencia Bancaria (Combos/Formación).
 - **Calendly:** Equipo NextGenFlow (https://calendly.com/nextgenflow)
 
