@@ -63,7 +63,7 @@ The **NextGenFlow App** is a mobile-first application that guides users through 
 
 ### 2. Form Screen (Pantalla 2)
 
-**Purpose:** Collect 5 mandatory fields for diagnosis initiation.
+**Purpose:** Collect 5 mandatory fields for nextgenflow initiation.
 
 **Content:**
 
@@ -179,7 +179,7 @@ The **NextGenFlow App** is a mobile-first application that guides users through 
 
 ### 4. Processing Screen (Pantalla 5)
 
-**Purpose:** Show progress while IA generates diagnosis.
+**Purpose:** Show progress while IA generates nextgenflow.
 
 **Content:**
 - **Title:** "Analizando tu negocio..."
@@ -204,7 +204,7 @@ The **NextGenFlow App** is a mobile-first application that guides users through 
 
 ### 5. Result Screen (Pantalla 6)
 
-**Purpose:** Display diagnosis result and enable PDF download + email.
+**Purpose:** Display nextgenflow result and enable PDF download + email.
 
 **Content:**
 - **Title:** "Tu Diagnóstico está listo"

@@ -194,8 +194,8 @@ app.get('/health', (req: Request, res: Response) => {
 });
 
 /**
- * Main diagnosis endpoint
- * POST /api/diagnosis
+ * Main nextgenflow endpoint
+ * POST /api/nextgenflow
  *
  * Body:
  * {
@@ -219,7 +219,7 @@ app.get('/health', (req: Request, res: Response) => {
  *   "timestamp": "2026-01-02T20:01:00.000Z"
  * }
  */
-app.post('/api/diagnosis', (req: Request, res: Response) => {
+app.post('/api/nextgenflow', (req: Request, res: Response) => {
   try {
     const data: NextGenFlowFormData = req.body;
 
@@ -330,7 +330,7 @@ app.post('/api/diagnosis', (req: Request, res: Response) => {
     }, processingTimeMs);
 
   } catch (error) {
-    console.error('❌ Error processing diagnosis:', error);
+    console.error('❌ Error processing nextgenflow:', error);
     res.status(500).json({
       success: false,
       error: 'Internal server error',
@@ -383,11 +383,11 @@ app.listen(PORT, () => {
 
 📝 Endpoints:
    GET    /health                    Health check
-   POST   /api/diagnosis             Process diagnosis form
+   POST   /api/nextgenflow             Process nextgenflow form
    POST   /api/echo                  Echo test (debugging)
 
 🧪 Test with cURL:
-   curl -X POST http://localhost:${PORT}/api/diagnosis \\
+   curl -X POST http://localhost:${PORT}/api/nextgenflow \\
      -H "Content-Type: application/json" \\
      -d '{
        "empresa": "Test Corp",
