@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
-import { THEME } from '../constants/theme';
+import { THEME } from '@/constants/theme';
 
 export const InputField = ({ label, placeholder, value, onChangeText, secureTextEntry = false }) => (
   <View style={styles.inputContainer}>

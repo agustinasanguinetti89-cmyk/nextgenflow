@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
-import { THEME } from '../constants/theme';
+import { THEME } from '@/constants/theme';
 import { ButtonPrimary } from './Button';
 
 export const ServiceCard = ({ title, subtitle, price, icon, onPress, expanded = false }) => {
