@@ -1,67 +1,39 @@
 export const THEME = {
   colors: {
-    dark: '#3a2459',      // Morado oscuro
-    primary: '#751f82',   // Rosa neón
-    light: '#f6f3f7',     // Lavanda claro
-    text: '#2a2a2a',      // Gris oscuro
-    gray: '#8a8a8a',      // Gris medio
+    primary: '#3a2459',
+    secondary: '#751f82',
+    accent: '#D4AF37',
+    background: '#f6f3f7',
     white: '#ffffff',
-    success: '#10B981',
-    error: '#EF4444',
-    gold: '#D4AF37',
+    dark: '#1a1a1a',
+    gray: '#6b7280',
+    lightGray: '#f3f4f6',
+    success: '#10b981',
+    error: '#ef4444',
   },
   gradients: {
-    hero: ['#3a2459', '#2d1a3e', '#751f82', '#5a1570'],
-    section: ['#f6f3f7', '#faf8fb'],
-    button: ['#751f82', '#5a1570'],
+    hero: ['#3a2459', '#751f82'],
+    button: ['#751f82', '#3a2459'],
+    card: ['#ffffff', '#f6f3f7'],
   },
   spacing: {
-    xs: 8,
-    sm: 12,
-    md: 16,
-    lg: 24,
-    xl: 32,
-    xxl: 48,
-    '3xl': 80,
-    '4xl': 120,
+    xs: 4, sm: 8, md: 16, lg: 24, xl: 32, xxl: 48, hero: 80,
   },
   borderRadius: {
-    sm: 6,
-    base: 8,
-    md: 12,
-    lg: 16,
-    xl: 20,
-    full: 9999,
-  },
-  typography: {
-    h1: { fontSize: 36, fontWeight: '700', fontFamily: 'Montserrat' },
-    h2: { fontSize: 28, fontWeight: '700', fontFamily: 'Montserrat' },
-    h3: { fontSize: 24, fontWeight: '600', fontFamily: 'Montserrat' },
-    body: { fontSize: 16, fontWeight: '400', fontFamily: 'Inter' },
-    small: { fontSize: 14, fontWeight: '400', fontFamily: 'Inter' },
-    tiny: { fontSize: 12, fontWeight: '400', fontFamily: 'Inter' },
+    none: 0, sm: 6, base: 8, md: 12, lg: 24, full: 9999,
   },
   shadows: {
-    sm: {
-      shadowColor: '#3a2459',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.08,
-      shadowRadius: 4,
-      elevation: 2,
-    },
-    md: {
-      shadowColor: '#3a2459',
-      shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.12,
-      shadowRadius: 8,
-      elevation: 4,
-    },
-    lg: {
-      shadowColor: '#3a2459',
-      shadowOffset: { width: 0, height: 8 },
-      shadowOpacity: 0.16,
-      shadowRadius: 16,
-      elevation: 8,
-    },
+    sm: { shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 2, elevation: 2 },
+    md: { shadowColor: '#3a2459', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.1, shadowRadius: 10, elevation: 5 },
   },
+  typography: {
+    h1: { fontSize: 32, fontFamily: 'Montserrat-Bold', lineHeight: 40 },
+    h2: { fontSize: 24, fontFamily: 'Montserrat-Bold', lineHeight: 32 },
+    h3: { fontSize: 20, fontFamily: 'Montserrat-SemiBold', lineHeight: 28 },
+    body: { fontSize: 16, fontFamily: 'Inter-Regular', lineHeight: 24 },
+    small: { fontSize: 14, fontFamily: 'Inter-Regular', lineHeight: 20 },
+    button: { fontSize: 16, fontFamily: 'Montserrat-Bold', textTransform: 'uppercase' },
+  }
 };
+export const Colors = THEME.colors;
+export const BrandColors = [THEME.colors.primary, THEME.colors.secondary];
