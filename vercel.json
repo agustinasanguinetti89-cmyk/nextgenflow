@@ -6,7 +6,6 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/index.html"
-    }
+            "destination": "/(tabs)/index.html"    }
   ]
 }
