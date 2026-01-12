@@ -21,6 +21,7 @@ const env = {
 const config: ExpoConfig = {
   name: 'NextGenFlow',
   slug: 'nextgenflow-app',
+  platforms: ["ios", "android", "web"],
   version: "3.0.0",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
