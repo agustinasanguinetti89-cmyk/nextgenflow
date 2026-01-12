@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npx expo export --platform web && rsync -av --exclude='index.html' public/ dist/",
+  "buildCommand": "npx expo export --platform web && cp -r public/* dist/ && rm -f dist/index.html",
   "outputDirectory": "dist",
   "framework": null
 }
