@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacit, Imagey } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacit, Image } from 'react-native';
 import { THEME } from '@/constants/theme';
 import { useRouter } from 'expo-router';
 
