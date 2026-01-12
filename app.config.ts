@@ -4,7 +4,7 @@ import type { ExpoConfig } from "expo/config";
 
 // Bundle ID format: space.manus.<project_name_dots>.<timestamp>
 const bundleId = "space.manus.nextgenflow.app";
-const timestamp = bundleId.split(".").pop()?.replace(/[^0-9]/g, "") ?? "";
+const timestamp = new Date().getTime().toString();
 const schemeFromBundleId = `manus${timestamp}`;
 
 const env = {
