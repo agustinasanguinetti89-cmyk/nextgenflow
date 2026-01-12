@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';, Image
 import { THEME } from '@/constants/theme';
 import { useRouter } from 'expo-router';
 
@@ -17,6 +17,7 @@ export default function HomeScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.header}>
+                <Image source={require('@/assets/images/logo-icon.png')} style={styles.logo} />
         <Text style={styles.brand}>NextGenFlow</Text>
         <Text style={styles.tagline}>Automatización Inteligente para tu Empresa</Text>
       </View>
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: THEME.colors.lavender },
   content: { padding: 24, paddingTop: 60 },
   header: { marginBottom: 40, alignItems: 'center' },
+    logo: { width: 100, height: 100, marginBottom: 16 },
   brand: { fontFamily: 'Montserrat-Bold', fontSize: 24, color: THEME.colors.primary },
   tagline: { fontFamily: 'Inter-Regular', fontSize: 14, color: THEME.colors.mediumGray },
   hero: { marginBottom: 32 },
