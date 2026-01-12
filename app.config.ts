@@ -23,7 +23,7 @@ const config: ExpoConfig = {
   slug: 'nextgenflow-app',
   version: "3.0.0",
   orientation: "portrait",
-  icon: "./assets/images/logo-icon.png",
+  icon: "./assets/images/icon.png",
   scheme: env.scheme,
   userInterfaceStyle: "automatic",
   newArchEnabled: true,
@@ -48,7 +48,7 @@ const config: ExpoConfig = {
   },
   web: {
     output: "static",
-    favicon: "./assets/images/favicon.png",
+    favicon: "./assets/images/icon.png",
   },
   plugins: [
     "expo-router",
